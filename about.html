@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Reha's Beauty Clinic</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <meta name="description" content="Discover the journey of Reha's Beauty Clinic. A story of passion, meticulous skincare, and high-end beauty engineering in the heart of Srinagar.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Italiana&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            light: '#C5A059',
+                            DEFAULT: '#B08D57',
+                            dark: '#8E7347',
+                        },
+                        cream: '#F9F6F1',
+                        charcoal: '#1A1A1A',
+                    },
+                    fontFamily: {
+                        mulish: ['Mulish', 'sans-serif'],
+                        cormorant: ['Cormorant', 'serif'],
+                        italiana: ['Italiana', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            font-family: 'Mulish', sans-serif;
+            background-color: #F9F6F1;
+            color: #1A1A1A;
+            overflow-x: hidden;
+        }
+        .nav-link { position: relative; transition: color 0.3s ease; }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 1px; background-color: #d6336c; transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .glass-nav {
+            background: rgba(249, 246, 241, 0.98);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(176, 141, 87, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        #mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        #mobile-menu.active { transform: translateY(0); }
+
+        /* Dropcap for Story */
+        .dropcap {
+            float: left;
+            font-family: 'Cormorant', serif;
+            font-size: 5.5rem;
+            line-height: 4.5rem;
+            padding-top: 4px;
+            padding-right: 12px;
+            padding-left: 3px;
+            color: #d6336c;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#d6336c] selection:text-white">
+
+   <div class="fixed top-0 left-0 w-full z-[60]  bg-charcoal text-white/80 py-2 px-6 text-[0.65rem] tracking-[0.2em] font-bold uppercase flex justify-between items-center transition-transform duration-300" id="topbar">
+        <div class="hidden md:flex space-x-6">
+            <span><span class="text-[#d6336c]">Call:</span>  +91 9622212234</span>
+            <span><span class="text-[#d6336c]">Email:</span> hello@rehasclinic.com</span>
+        </div>
+        <div class="mx-auto md:mx-0 hidden md:flex">
+            <span>Srinagar's Premier Luxury Beauty Destination</span>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[100] bg-cream flex flex-col items-center justify-center text-charcoal">
+        <button id="close-menu" class="absolute top-8 right-8 text-charcoal hover:text-[#d6336c] transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="flex flex-col items-center space-y-10 font-cormorant text-4xl md:text-6xl italic">
+            <a href="index.html" class="mobile-nav-link hover:text-[#d6336c] transition-colors">Home</a>
+            <a href="services.html" class="mobile-nav-link hover:text-[#d6336c] transition-colors">Services</a>
+            <a href="about.html" class="mobile-nav-link text-[#d6336c] transition-colors">About</a>
+            <a href="gallery.html" class="mobile-nav-link hover:text-[#d6336c] transition-colors">Gallery</a>
+            <a href="contact.html" class="mobile-nav-link hover:text-[#d6336c] transition-colors">Contact</a>
+        </div>
+        <div class="mt-20 mobile-nav-link">
+            <button class="px-12 py-4 bg-transparent border border-[#d6336c] text-[#d6336c] text-[0.85rem] tracking-[0.4em] font-bold uppercase hover:bg-[#d6336c] hover:text-white transition-all duration-500 font-mulish not-italic">
+                BOOK CONSULTATION
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <!-- Added md:top-[38px] to account for slightly taller enhanced topbar -->
+    <nav class="fixed top-0 md:top-[38px] left-0 w-full z-50 glass-nav px-6 py-4 md:py-2 transition-all duration-500">
+        <div class="max-w-[1400px] mx-auto flex items-center justify-center relative">
+            
+            <div class="hidden lg:flex items-center space-x-12">
+                <a href="index.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-charcoal/90">HOME</a>
+                <a href="services.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-charcoal/90">SERVICES</a>
+            </div>
+
+            <div class="lg:hidden absolute left-0 flex items-center">
+                <button id="open-menu" class="text-charcoal hover:text-[#d6336c] transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 8h16M4 16h16" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex flex-col items-center z-10 mx-12 lg:mx-20">
+                <a href="index.html" class="flex flex-col items-center group">
+                    <img src="assets/logo.png" alt="Reha's Beauty Clinic" class="h-[65px] md:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105">
+                </a>
+            </div>
+
+            <div class="hidden lg:flex items-center space-x-12">
+                <a href="gallery.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-charcoal/90">GALLERY</a>
+                <a href="about.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-[#d6336c]">ABOUT</a>
+                <a href="contact.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-charcoal/90">CONTACT</a>
+                <a href="booking.html">
+           <button class="px-8 py-3 bg-charcoal text-white text-[0.7rem] tracking-[0.3em] font-bold uppercase hover:bg-[#d6336c] transition-all duration-500 shadow-lg leading-none ml-6">
+             BOOK NOW
+           </button>
+               </a>
+            </div>
+
+           <div class="lg:hidden absolute right-0">
+    <a href="booking.html">
+        <button class="px-5 py-2 bg-charcoal text-white text-[0.6rem] tracking-[0.3em] font-bold uppercase shadow-lg">
+            BOOK
+        </button>
+    </a>
+</div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="pt-40 md:pt-48 pb-20 px-6 bg-cream text-center relative overflow-hidden text-charcoal border-b border-[#d6336c]/10">
+        <div class="max-w-4xl mx-auto relative z-10 header-content">
+            <span class="font-mulish text-[#d6336c] tracking-[0.5em] uppercase text-[0.7rem] font-bold mb-4 block">The Heritage</span>
+            <h1 class="font-cormorant text-5xl md:text-7xl italic leading-tight">Our Legacy</h1>
+        </div>
+    </header>
+
+    <!-- Company History Section -->
+    <section class="py-24 px-6 bg-white relative">
+        <div class="max-w-[900px] mx-auto story-content">
+            <p class="text-lg md:text-xl text-charcoal/80 leading-relaxed font-light mb-8">
+                <span class="dropcap">W</span>elcome to Reha’s, where a dream has blossomed into reality. From a young age, Reha was captivated by the art of beauty, seeing it as a form of engineering. Growing up amidst the breathtaking landscapes of Srinagar, she absorbed the natural beauty around her, which became an integral part of her being.
+            </p>
+            <p class="text-lg md:text-xl text-charcoal/80 leading-relaxed font-light mb-16">
+                Reha's dedication to her skincare routine was meticulous, always ensuring she looked her best. This inner passion evolved into a full-fledged career in the beauty industry, making her an unstoppable force today.
+            </p>
+
+            <div class="border-t border-[#d6336c]/20 pt-16">
+                <h3 class="font-cormorant text-3xl md:text-4xl italic text-charcoal text-center mb-12">The Journey of Excellence</h3>
+                
+                <!-- Timeline / Highlights -->
+                <div class="space-y-12 max-w-2xl mx-auto">
+                    <!-- Item -->
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center timeline-item">
+                        <div class="w-full md:w-1/3 text-left md:text-right border-b md:border-b-0 md:border-r border-[#d6336c]/20 pb-4 md:pb-0 md:pr-10">
+                            <span class="font-mulish text-[#d6336c] tracking-[0.2em] uppercase text-[0.75rem] font-bold">Skin Care</span>
+                        </div>
+                        <div class="w-full md:w-2/3">
+                            <h4 class="font-cormorant text-2xl text-charcoal italic mb-2">Certified Professional</h4>
+                            <p class="text-sm font-light text-charcoal/60 leading-relaxed">Reha earned her elite credentials from the prestigious Harshada Takke Skin Care Certification Board.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Item -->
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center timeline-item">
+                        <div class="w-full md:w-1/3 text-left md:text-right border-b md:border-b-0 md:border-r border-[#d6336c]/20 pb-4 md:pb-0 md:pr-10">
+                            <span class="font-mulish text-[#d6336c] tracking-[0.2em] uppercase text-[0.75rem] font-bold">Nails</span>
+                        </div>
+                        <div class="w-full md:w-2/3">
+                            <h4 class="font-cormorant text-2xl text-charcoal italic mb-2">Nail Art Expertise</h4>
+                            <p class="text-sm font-light text-charcoal/60 leading-relaxed">Her raw passion and immense talent for intricate nail art have established her as an industry-leading artist.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center timeline-item">
+                        <div class="w-full md:w-1/3 text-left md:text-right border-b md:border-b-0 md:border-r border-[#d6336c]/20 pb-4 md:pb-0 md:pr-10">
+                            <span class="font-mulish text-[#d6336c] tracking-[0.2em] uppercase text-[0.75rem] font-bold">Hair</span>
+                        </div>
+                        <div class="w-full md:w-2/3">
+                            <h4 class="font-cormorant text-2xl text-charcoal italic mb-2">Styling Proficiency</h4>
+                            <p class="text-sm font-light text-charcoal/60 leading-relaxed">Privately trained by the renowned Bollywood hairstylist Kamal Palan, Reha's high-fashion skills in hair styling are unmatched.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center timeline-item">
+                        <div class="w-full md:w-1/3 text-left md:text-right border-b md:border-b-0 md:border-r border-[#d6336c]/20 pb-4 md:pb-0 md:pr-10">
+                            <span class="font-mulish text-[#d6336c] tracking-[0.2em] uppercase text-[0.75rem] font-bold">Makeup</span>
+                        </div>
+                        <div class="w-full md:w-2/3">
+                            <h4 class="font-cormorant text-2xl text-charcoal italic mb-2">Makeup Mastery</h4>
+                            <p class="text-sm font-light text-charcoal/60 leading-relaxed">She realized her dream after being rigorously trained by the Jaywant Thakre Makeup Academy, one of India's premier makeover institutions.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- High Profile Projects (Marquee / List) -->
+    <section class="py-20 bg-charcoal text-white overflow-hidden">
+        <div class="max-w-[1400px] mx-auto px-6 text-center mb-12">
+            <span class="font-mulish text-[#d6336c] tracking-[0.4em] uppercase text-[0.65rem] font-bold">The Portfolio</span>
+            <h2 class="font-cormorant text-3xl md:text-4xl italic text-white mt-4">High-Profile Projects</h2>
+            <p class="font-mulish text-white/50 text-sm font-light mt-4 max-w-xl mx-auto">Reha’s expertise extends far beyond the clinic, servicing the elite in the entertainment and fashion industries.</p>
+        </div>
+        
+        <div class="w-full max-w-[1000px] mx-auto grid grid-cols-1 sm:grid-cols-2 gap-px bg-[#d6336c]/20 border border-[#d6336c]/20">
+            <!-- Project Grid Items -->
+            <div class="bg-charcoal p-10 flex items-center justify-center text-center hover:bg-white/5 transition-colors project-item">
+                <span class="font-cormorant italic text-xl md:text-2xl text-white/90">Fashion Shows with<br><span class="text-[#d6336c] mt-2 block not-italic font-mulish tracking-widest text-xs font-bold uppercase">Shakir Sheikh</span></span>
+            </div>
+            <div class="bg-charcoal p-10 flex items-center justify-center text-center hover:bg-white/5 transition-colors project-item">
+                <span class="font-cormorant italic text-xl md:text-2xl text-white/90">The Prestigious<br><span class="text-[#d6336c] mt-2 block not-italic font-mulish tracking-widest text-xs font-bold uppercase">Zee Cine Awards</span></span>
+            </div>
+            <div class="bg-charcoal p-10 flex items-center justify-center text-center hover:bg-white/5 transition-colors project-item">
+                <span class="font-cormorant italic text-xl md:text-2xl text-white/90">Bigg Boss sets with<br><span class="text-[#d6336c] mt-2 block not-italic font-mulish tracking-widest text-xs font-bold uppercase">Amisha Patel</span></span>
+            </div>
+            <div class="bg-charcoal p-10 flex items-center justify-center text-center hover:bg-white/5 transition-colors project-item">
+                <span class="font-cormorant italic text-xl md:text-2xl text-white/90">High-End Editorials<br><span class="text-[#d6336c] mt-2 block not-italic font-mulish tracking-widest text-xs font-bold uppercase">Albums & Weddings</span></span>
+            </div>
+        </div>
+
+        <div class="text-center mt-16 max-w-2xl mx-auto px-6">
+            <p class="font-mulish text-[#d6336c]/80 italic text-sm md:text-base leading-relaxed">"At Reha’s, we are committed to bringing the same level of passion and excellence to each client, ensuring they experience the beauty and care that Reha herself embodies."</p>
+        </div>
+    </section>
+
+    <!-- Our Philosophy (Minimal Elegant Quote) -->
+    <section class="py-24 px-6 bg-white relative flex items-center justify-center min-h-[50vh]">
+        <!-- Decorative subtle background element -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+            <span class="font-italiana text-[15vw] leading-none text-charcoal">REHA'S</span>
+        </div>
+        <div class="max-w-[800px] mx-auto text-center relative z-10 philosophy-content">
+            <span class="font-mulish text-[#d6336c] tracking-[0.4em] uppercase text-[0.6rem] font-bold block mb-8">The Ethos</span>
+            <p class="font-cormorant text-4xl md:text-6xl italic text-charcoal leading-tight">
+                "Beauty is not about transformation. It is the sophisticated engineering of revealing one's truest self."
+            </p>
+        </div>
+    </section>
+
+    <!-- Accolades & Certifications (Minimalist Text Grid) -->
+    <section class="py-20 px-6 bg-cream border-y border-[#d6336c]/10">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="text-center mb-16">
+                <span class="font-mulish text-[#d6336c] tracking-[0.4em] uppercase text-[0.65rem] font-bold block mb-3">Distinctions</span>
+                <h2 class="font-cormorant text-3xl md:text-4xl italic text-charcoal">Awards & Certifications</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16 max-w-[1200px] mx-auto text-center accolade-item">
+                <!-- Cert 1 -->
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 border border-[#d6336c]/40 rounded-full flex items-center justify-center mb-6 text-[#d6336c]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    </div>
+                    <h4 class="font-cormorant text-2xl text-charcoal italic mb-2">Harshada Takke</h4>
+                    <span class="font-mulish text-charcoal/50 text-[0.7rem] uppercase tracking-widest font-bold">Skin Care Board Certification</span>
+                </div>
+                <!-- Cert 2 -->
+                <div class="flex flex-col items-center accolade-item">
+                    <div class="w-16 h-16 border border-[#d6336c]/40 rounded-full flex items-center justify-center mb-6 text-[#d6336c]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                    </div>
+                    <h4 class="font-cormorant text-2xl text-charcoal italic mb-2">Kamal Palan</h4>
+                    <span class="font-mulish text-charcoal/50 text-[0.7rem] uppercase tracking-widest font-bold">Master Hair Styling Program</span>
+                </div>
+                <!-- Cert 3 -->
+                <div class="flex flex-col items-center accolade-item">
+                    <div class="w-16 h-16 border border-[#d6336c]/40 rounded-full flex items-center justify-center mb-6 text-[#d6336c]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" /></svg>
+                    </div>
+                    <h4 class="font-cormorant text-2xl text-charcoal italic mb-2">Jaywant Thakre</h4>
+                    <span class="font-mulish text-charcoal/50 text-[0.7rem] uppercase tracking-widest font-bold">Premier Makeover Academy</span>
+                </div>
+                <!-- Cert 4 -->
+                <div class="flex flex-col items-center accolade-item">
+                    <div class="w-16 h-16 border border-[#d6336c]/40 rounded-full flex items-center justify-center mb-6 text-[#d6336c]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>
+                    </div>
+                    <h4 class="font-cormorant text-2xl text-charcoal italic mb-2">Excellence Award</h4>
+                    <span class="font-mulish text-charcoal/50 text-[0.7rem] uppercase tracking-widest font-bold">Srinagar Beauty Guild</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Collective (Team) -->
+    <section class="py-24 px-6 bg-cream">
+        <div class="max-w-[1400px] mx-auto text-center mb-16">
+            <span class="font-mulish text-[#d6336c] tracking-[0.5em] uppercase text-[0.7rem] font-bold block mb-4">The Collective</span>
+            <h2 class="font-cormorant text-4xl md:text-5xl italic text-charcoal">Our Artisans</h2>
+        </div>
+
+        <!-- Minimalist Team Grid -->
+        <div class="max-w-[1000px] mx-auto grid grid-cols-1 sm:grid-cols-3 gap-12 md:gap-16">
+            
+            <!-- Team Member 1 -->
+            <div class="flex flex-col items-center group team-card">
+                <div class="w-48 h-64 md:w-56 md:h-[22rem] overflow-hidden mb-6 filter grayscale group-hover:grayscale-0 transition-all duration-700 relative">
+                    <!-- Using placeholder since we don't have specified team images -->
+                    <img src="team/1.jpg" alt="Reha" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000">
+                    <div class="absolute inset-0 border border-[#d6336c]/0 group-hover:border-[#d6336c]/30 transition-colors duration-700 z-10 m-2"></div>
+                </div>
+                <h3 class="font-cormorant text-2xl text-charcoal italic">...</h3>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="flex flex-col items-center group team-card">
+                <div class="w-48 h-64 md:w-56 md:h-[22rem] overflow-hidden mb-6 filter grayscale group-hover:grayscale-0 transition-all duration-700 relative">
+                    <img src="team/2.jpg" alt="Sarah" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000">
+                    <div class="absolute inset-0 border border-[#d6336c]/0 group-hover:border-[#d6336c]/30 transition-colors duration-700 z-10 m-2"></div>
+                </div>
+                <h3 class="font-cormorant text-2xl text-charcoal italic">.....</h3>
+            </div>
+               <div class="flex flex-col items-center group team-card">
+                <div class="w-48 h-64 md:w-56 md:h-[22rem] overflow-hidden mb-6 filter grayscale group-hover:grayscale-0 transition-all duration-700 relative">
+                    <img src="team/3.jpg" alt="Priya" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000">
+                    <div class="absolute inset-0 border border-[#d6336c]/0 group-hover:border-[#d6336c]/30 transition-colors duration-700 z-10 m-2"></div>
+                </div>
+                <h3 class="font-cormorant text-2xl text-charcoal italic">.....</h3>
+            </div>
+            
+
+            <!-- Team Member 3 -->
+            <div class="flex flex-col items-center group team-card">
+                <div class="w-48 h-64 md:w-56 md:h-[22rem] overflow-hidden mb-6 filter grayscale group-hover:grayscale-0 transition-all duration-700 relative">
+                    <img src="team/5.jpg" alt="Priya" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000">
+                    <div class="absolute inset-0 border border-[#d6336c]/0 group-hover:border-[#d6336c]/30 transition-colors duration-700 z-10 m-2"></div>
+                </div>
+                <h3 class="font-cormorant text-2xl text-charcoal italic">.....</h3>
+            </div>
+
+            <div class="flex flex-col items-center group team-card">
+                <div class="w-48 h-64 md:w-56 md:h-[22rem] overflow-hidden mb-6 filter grayscale group-hover:grayscale-0 transition-all duration-700 relative">
+                    <img src="team/4.jpg" alt="Sarah" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000">
+                    <div class="absolute inset-0 border border-[#d6336c]/0 group-hover:border-[#d6336c]/30 transition-colors duration-700 z-10 m-2"></div>
+                </div>
+                <h3 class="font-cormorant text-2xl text-charcoal italic">.....</h3>
+                 
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="py-20 px-6 bg-cream text-charcoal border-t border-[#d6336c]/10">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            
+            <div class="md:col-span-1">
+                <span class="font-italiana text-2xl tracking-[0.2em] text-charcoal">REHA'S</span>
+                <p class="mt-6 text-[0.8rem] text-charcoal/60 leading-relaxed font-light">
+                    Experience the artistry and care that define our brand. Join us and let beauty meet passion.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-[0.7rem] tracking-[0.3em] font-bold uppercase mb-8">LOCATION</h4>
+                <p class="text-[0.8rem] text-charcoal/60 font-light leading-relaxed">
+                    Bath Impressions Complex, Housing Colony, Chanpora, Srinagar, Jammu and Kashmir 190001<br>
+                    Premier Beauty Services
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-[0.7rem] tracking-[0.3em] font-bold uppercase mb-8">CONNECT</h4>
+                <p class="text-[0.8rem] text-charcoal/60 font-light leading-relaxed">
+                     Mobile phone: +91 9622212234<br>
+                    E: info@rehasbeauty.com
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-[0.7rem] tracking-[0.3em] font-bold uppercase mb-8">EXPLORE</h4>
+               <ul class="space-y-4 text-[0.8rem] text-charcoal/60 font-light">
+                    <li><a href="about.html" class="hover:text-[#d6336c] transition-colors">About</a></li>
+                    <li><a href="services.html" class="hover:text-[#d6336c] transition-colors"> Services</a></li>
+                    <li><a href="contact.html" class="hover:text-[#d6336c] transition-colors">Contact</a></li>
+                    <li><a href="gallery.html" class="hover:text-[#d6336c] transition-colors">Gallery</a></li>
+                   
+                </ul>
+            </div>
+
+        </div>
+        <div class="max-w-[1400px] mx-auto mt-20 pt-8 border-t border-[#d6336c]/5 flex flex-col md:flex-row justify-between items-center text-[0.6rem] tracking-[0.2em] font-bold text-charcoal/30 uppercase">
+            <span>© <span id="current-year">2026</span> REHA'S BEAUTY CLINIC</span>
+            <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+            <div class="flex space-x-8 mt-4 md:mt-0">
+                <a href="#" class="hover:text-[#d6336c] transition-colors">INSTAGRAM</a>
+                <a href="#" class="hover:text-[#d6336c] transition-colors">FACEBOOK</a>
+                <a href="#" class="hover:text-[#d6336c] transition-colors">PINTEREST</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // GSAP Initialization
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Navbar Scroll Effect (Adjusted for Topbar offset)
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                // If scrolled past topbar, pin exactly to top
+                nav.classList.remove('md:top-[38px]', 'py-4', 'md:py-2');
+                nav.classList.add('top-0', 'py-2', 'md:py-4');
+                nav.style.background = "rgba(249, 246, 241, 0.95)";
+                nav.style.boxShadow = "0 4px 30px rgba(0, 0, 0, 0.05)";
+            } else {
+                nav.classList.add('md:top-[38px]', 'py-4', 'md:py-2');
+                nav.classList.remove('top-0', 'py-2', 'md:py-4');
+                nav.style.background = "rgba(249, 246, 241, 0.9)";
+                nav.style.boxShadow = "0 4px 30px rgba(0, 0, 0, 0.03)";
+            }
+        });
+
+        // Mobile Menu Logic
+        const openBtn = document.getElementById('open-menu');
+        const closeBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        openBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            gsap.from('.mobile-nav-link', {
+                y: 30,
+                opacity: 0,
+                duration: 0.5,
+                delay: 0.2,
+                stagger: 0.1
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        // Page Entry Animations
+        window.addEventListener('load', () => {
+            gsap.from('.header-content *', {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            gsap.from('nav', {
+                y: -50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // Scroll Animations for Story Content
+        gsap.from('.story-content > p', {
+            scrollTrigger: {
+                trigger: '.story-content',
+                start: 'top 85%',
+            },
+            y: 30,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.3,
+            ease: "power2.out"
+        });
+
+        // Timeline Items
+        gsap.from('.timeline-item', {
+            scrollTrigger: {
+                trigger: '.timeline-item',
+                start: 'top 85%',
+            },
+            x: -30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+
+        // Project Items
+        gsap.from('.project-item', {
+            scrollTrigger: {
+                trigger: '.project-item',
+                start: 'top 90%',
+            },
+            scale: 0.95,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power2.out"
+        });
+
+        // Philosophy Animation
+        gsap.from('.philosophy-content', {
+            scrollTrigger: {
+                trigger: '.philosophy-content',
+                start: 'top 85%',
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out"
+        });
+
+        // Accolade Items Animation
+        gsap.from('.accolade-item', {
+            scrollTrigger: {
+                trigger: '.accolade-item',
+                start: 'top 85%',
+            },
+            y: 30,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power2.out"
+        });
+
+        // Team Cards
+        gsap.from('.team-card', {
+            scrollTrigger: {
+                trigger: '.team-card',
+                start: 'top 85%',
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+
+    </script>
+</body>
+</html>

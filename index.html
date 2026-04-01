@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reha's Beauty Clinic | Beauty Meets Passion</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <meta name="description" content="Welcome to Reha’s, where beauty meets passion. Expert skin care, stunning nail art, and professional hair styling.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Exo:ital,wght@0,100..900;1,100..900&family=Italiana&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Mozilla+Headline:wght@200..700&family=Mozilla+Text:wght@200..700&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&family=Sora:wght@100..800&family=Varta:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            light: '#C5A059',
+                            DEFAULT: '#B08D57',
+                            dark: '#8E7347',
+                        },
+                        cream: '#F9F6F1',
+                        charcoal: '#1A1A1A',
+                    },
+                    fontFamily: {
+                        mulish: ['Mulish', 'sans-serif'],
+                        cormorant: ['Cormorant', 'serif'],
+                        italiana: ['Italiana', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: 'Mulish', sans-serif;
+            background-color: #F9F6F1;
+            color: #1A1A1A;
+            overflow-x: hidden;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #d6336c;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .indicator-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .indicator-dot.active {
+            background-color: #d6336c;
+            width: 32px;
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .glass-nav {
+            background: rgba(249, 246, 241, 0.98);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(176, 141, 87, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        #mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        #mobile-menu.active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#d6336c] selection:text-white">
+    
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[100] bg-cream flex flex-col items-center justify-center text-charcoal">
+        <button id="close-menu" class="absolute top-8 right-8 text-charcoal hover:text-[#d6336c] transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="flex flex-col items-center space-y-10 font-cormorant text-4xl md:text-6xl italic">
+            <a href="index.html" class="mobile-nav-link text-[#d6336c] transition-colors">Home</a>
+            <a href="services.html" class="mobile-nav-link hover:text-[#d6336c] transition-colors">Services</a>
+            <a href="about.html" class="mobile-nav-link hover:text-[#d6336c] transition-colors">About</a>
+            <a href="about.html" class="mobile-nav-link hover:text-[#d6336c] transition-colors">Gallery</a>
+            <a href="contact.html" class="mobile-nav-link hover:text-[#d6336c] transition-colors">Contact</a>
+        </div>
+        <div class="mt-20 mobile-nav-link">
+            <button class="px-12 py-4 bg-transparent border border-[#d6336c] text-[#d6336c] text-[0.85rem] tracking-[0.4em] font-bold uppercase hover:bg-[#d6336c] hover:text-white transition-all duration-500 font-mulish not-italic">
+                BOOK CONSULTATION
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+     <nav class="fixed top-0 left-0 w-full z-50 glass-nav px-6 mt-19">
+        <div class="max-w-[1400px] mx-auto flex items-center justify-center relative">
+            
+            <!-- Left Links -->
+            <div class="hidden lg:flex items-center space-x-12">
+                <a href="index.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-charcoal/90">HOME</a>
+                <a href="services.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-charcoal/90">SERVICES</a>
+                <a href="about.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-charcoal/90">ABOUT</a>
+            </div>
+
+            <!-- Hamburger Button (Left on Mobile) -->
+            <div class="lg:hidden absolute left-0 flex items-center">
+                <button id="open-menu" class="text-charcoal hover:text-[#d6336c] transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 8h16M4 16h16" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Center Logo Cluster -->
+            <div class="flex flex-col items-center z-10 mx-12 lg:mx-20">
+                <a href="/" class="flex flex-col items-center group">
+                    <img src="assets/logo.png" alt="Reha's Beauty Clinic" class="h-[80px] md:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105">
+                </a>
+            </div>
+
+            <!-- Right Links & CTA -->
+            <div class="hidden lg:flex items-center space-x-12">
+                <a href="gallery.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-charcoal/90">Gallery</a>
+                <a href="contact.html" class="nav-link text-[0.8rem] tracking-[0.25em] font-extrabold uppercase text-charcoal/90">CONTACT</a>
+                <a href="booking.html">
+           <button class="px-8 py-3 bg-charcoal text-white text-[0.7rem] tracking-[0.3em] font-bold uppercase hover:bg-[#d6336c] transition-all duration-500 shadow-lg leading-none ml-6">
+             BOOK NOW
+           </button>
+               </a>
+            </div>
+
+            <!-- Mobile CTA (Right on Mobile) -->
+            <div class="lg:hidden absolute right-0">
+                <a href="booking.html">
+           <button class="px-5 py-2 bg-charcoal text-white text-[0.6rem] tracking-[0.3em] font-bold uppercase shadow-lg">
+            BOOK
+         </button>
+     </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen w-full overflow-hidden bg-charcoal">
+        
+        <!-- Slider Slides -->
+        <div id="hero-slider" class="relative h-full w-full">
+            
+            <!-- Slide 1: Skin Care -->
+            <div class="slide active">
+                <img src="assets/skincare.png" alt="Skin Care" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="relative max-w-[1400px] w-full mx-auto px-6 flex items-center justify-center text-center z-10">
+                    <div class="text-white">
+                       
+                        <h1 class="slide-up font-cormorant text-5xl md:text-6xl italic mb-8 leading-[1.1]">Where BeautyMeets Passion</h1>
+                        <p class="slide-up max-w-lg mx-auto font-mulish text-cream/70 text-base md:text-lg leading-relaxed mb-10 font-light">
+                            Founded by Reha, whose love for beauty started in the picturesque valleys of Srinagar. 
+                            Our salon is a culmination of a lifelong dream.
+                        </p>
+                        <div class="slide-up flex flex-wrap justify-center gap-6">
+                            <a href="services.html" class="px-10 py-4 bg-[#d6336c] text-white text-[0.7rem] tracking-[0.3em] font-bold uppercase hover:bg-black transition-all">DISCOVER SERVICES</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Makeup -->
+            <div class="slide">
+                <img src="assets/makeup.png" alt="Makeup" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="relative max-w-[1400px] w-full mx-auto px-6 flex items-center justify-center text-center z-10">
+                    <div class="text-white">
+                        
+                        <h1 class="slide-up font-cormorant text-5xl md:text-6xl italic mb-8 leading-[1.1]">The Art Of Transformation</h1>
+                        <p class="slide-up max-w-lg mx-auto font-mulish text-cream/70 text-base md:text-lg leading-relaxed mb-10 font-light">
+                            Gracing fashion shows, Zee Cine Awards, and music albums. 
+                            Reha brings professional Bollywood makeup artistry to every client.
+                        </p>
+                        <div class="slide-up flex flex-wrap justify-center gap-6">
+                            <a href="services.html" class="px-10 py-4  bg-[#d6336c] text-white text-[0.7rem] tracking-[0.3em] font-bold uppercase hover:bg-black transition-all">VIEW PORTFOLIO</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Hair Styling -->
+            <div class="slide">
+                <img src="assets/hairstyling.png" alt="Hair Styling" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="relative max-w-[1400px] w-full mx-auto px-6 flex items-center justify-center text-center z-10">
+                    <div class="text-white">
+                       
+                        <h1 class="slide-up font-cormorant text-5xl md:text-5xl italic mb-8 leading-[1.1]">Elegance In Every Strand</h1>
+                        <p class="slide-up max-w-lg mx-auto font-mulish text-cream/70 text-base md:text-lg leading-relaxed mb-10 font-light">
+                            Masterful styling honed under legendary guidance. 
+                            Every cut and style is personalized to reveal your most beautiful self.
+                        </p>
+                        <div class="slide-up flex flex-wrap justify-center gap-6">
+                            <a href="services.html" class="px-10 py-4  bg-[#d6336c] text-white text-[0.7rem] tracking-[0.3em] font-bold uppercase hover:bg-black transition-all">HAIR SERVICES</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <!-- Horizontal Pagination Dots (Centered at Bottom) -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center space-x-6 z-20">
+            <div class="indicator-dot active" onclick="goToSlide(0)"></div>
+            <div class="indicator-dot" onclick="goToSlide(1)"></div>
+            <div class="indicator-dot" onclick="goToSlide(2)"></div>
+        </div>
+
+        <!-- Scroll Line Container -->
+        <div class="absolute bottom-12 left-12 hidden md:flex items-center space-x-4 z-20">
+            <div class="w-[1px] h-20 bg-white/20 relative overflow-hidden">
+                <div id="scroll-line" class="absolute top-0 left-0 w-full h-full bg-[#d6336c]"></div>
+            </div>
+            <div class="text-white/40 text-[0.5rem] tracking-[0.5em] uppercase origin-left -rotate-90 translate-y-[-40px]">SCROLL</div>
+        </div>
+
+    </header>
+
+
+    <!-- Enhanced About Section -->
+    <section id="about-section" class="py-24 px-6 bg-cream overflow-hidden">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+                
+                <!-- Layered Image Composition -->
+                <div class="lg:w-1/2 relative">
+                    <div class="about-img-main relative z-10 aspect-[4/5] overflow-hidden rounded-sm shadow-2xl">
+                        <img src="assets/reha.png" alt="Reha's Expertise" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-10 -right-10 w-40 h-40 border border-[#d6336c]/20 z-0 hidden lg:block"></div>
+                    <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-[#d6336c]/5 z-0 hidden lg:block"></div>
+                    <div class="absolute top-1/2 -left-12 -translate-y-1/2 hidden xl:block z-20">
+                        <span class="font-italiana text-9xl text-[#d6336c]/10 origin-center -rotate-90 block">EST. 2011</span>
+                    </div>
+                </div>
+
+                <!-- Content Area -->
+                <div class="lg:w-1/2">
+                    <div class="about-text-content">
+                        <span class="font-mulish text-[#d6336c] tracking-[0.6em] uppercase text-[0.6rem] font-bold mb-4 block">Our Legacy</span>
+                        <h2 class="font-cormorant text-4xl md:text-6xl text-charcoal italic mb-8 leading-tight">Founded on Love,<br>Honed by Artistry</h2>
+                        
+                        <div class="space-y-6 font-mulish text-charcoal/70 leading-relaxed font-light text-base md:text-lg">
+                            <p class="font-medium italic font-cormorant text-[#d6336c] text-xl border-l-2 border-[#d6336c]/30 pl-6 mb-8">
+                                "Beauty is a reflection of the soul. My mission is to reveal that light in every individual I serve."
+                            </p>
+                            <p>
+                                Founded by Reha, whose journey began in the serene valleys of Srinagar. 
+                                Today, Reha’s is a destination where Bollywood-grade expertise meets personalized care.
+                            </p>
+                            <p>
+                                Certified by the <span class="text-charcoal font-medium">Harshada Takke Skin Care Board</span> and the <span class="text-charcoal font-medium">Jaywant Thakre Makeup Academy</span>, 
+                                Reha’s artistry has been showcased at the Zee Cine Awards, Bigg Boss, and premier fashion weeks.
+                            </p>
+                        </div>
+
+                        <!-- Statistics Grid -->
+                        <div class="mt-12 grid grid-cols-2 gap-y-10 gap-x-12 border-t border-[#d6336c]/10 pt-12">
+                            <div class="stat-item">
+                                <span class="block font-cormorant text-3xl md:text-4xl text-[#d6336c] italic mb-1"><span class="counter">15</span>+</span>
+                                <span class="block text-[0.6rem] tracking-[0.3em] uppercase text-charcoal/40 font-[#d6336c]">Years Experience</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="block font-cormorant text-3xl md:text-4xl text-[#d6336c] italic mb-1"><span class="counter">500</span>+</span>
+                                <span class="block text-[0.6rem] tracking-[0.3em] uppercase text-charcoal/40 font-bold">Bridal Stories</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="block font-cormorant text-3xl md:text-4xl text-[#d6336c] italic mb-1"><span class="counter">20</span>+</span>
+                                <span class="block text-[0.6rem] tracking-[0.3em] uppercase text-charcoal/40 font-bold">Film & Awards</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="block font-cormorant text-3xl md:text-4xl text-[#d6336c] italic mb-1"><span class="counter">100</span>%</span>
+                                <span class="block text-[0.6rem] tracking-[0.3em] uppercase text-charcoal/40 font-bold">Client Bliss</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-12">
+                            <a href="about.html" class="inline-flex items-center space-x-4 text-[#d6336c] text-[0.7rem] tracking-[0.3em] font-bold uppercase group">
+                                <span>Learn More About Reha</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonial Section -->
+    <section class="py-24 px-6 bg-charcoal overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-[#d6336c]/5 pointer-events-none"></div>
+        <div class="max-w-[1400px] mx-auto relative z-10">
+            <div class="text-center mb-16 max-w-2xl mx-auto">
+                <span class="font-mulish text-[#d6336c] tracking-[0.5em] uppercase text-[0.7rem] font-bold mb-4 block">Kind Words</span>
+                <h2 class="font-cormorant text-4xl md:text-5xl text-white italic mb-6">Client Experiences</h2>
+                <p class="font-mulish text-cream/50 text-sm md:text-base font-light leading-relaxed">
+                    Celebrating unique beauty through the words of our cherished clients.
+                </p>
+            </div>
+
+            <div class="relative overflow-hidden px-4 md:px-0">
+                <div id="testimonial-track" class="flex transition-transform duration-700 ease-out space-x-6">
+                    
+                    <!-- Card 1 -->
+                    <div class="testimonial-card flex-shrink-0 w-full md:w-[calc(33.333%-1rem)] bg-white/5 backdrop-blur-md border border-white/5 p-8 rounded-sm hover:border-[#d6336c]/30 transition-colors">
+                        <div class="flex flex-col h-full">
+                            <span class="font-cormorant text-6xl text-[#d6336c]/20 block mb-[-20px]">"</span>
+                            <p class="font-mulish text-cream/80 text-sm md:text-base leading-relaxed italic mb-8 flex-grow">
+                                Reha is a true visionary. Her attention to detail and ability to understand exactly what suits my face is unparalleled. 
+                                I felt like a superstar after my bridal makeup.
+                            </p>
+                            <div class="flex items-center space-x-4 border-t border-white/10 pt-6 mt-auto">
+                                <div class="w-10 h-10 rounded-full bg-[#d6336c]/10 flex items-center justify-center text-[#d6336c] font-bold text-sm font-italiana border border-[#d6336c]/20">SJ</div>
+                                <div>
+                                    <h4 class="font-cormorant text-lg text-white italic">Sarah Johnson</h4>
+                                    <span class="text-[0.55rem] tracking-[0.2em] uppercase text-[#d6336c]/60 font-medium">Bridal Client</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="testimonial-card flex-shrink-0 w-full md:w-[calc(33.333%-1rem)] bg-white/5 backdrop-blur-md border border-white/5 p-8 rounded-sm hover:border-[#d6336c]/30 transition-colors">
+                        <div class="flex flex-col h-full">
+                            <span class="font-cormorant text-6xl text-[#d6336c]/20 block mb-[-20px]">"</span>
+                            <p class="font-mulish text-cream/80 text-sm md:text-base leading-relaxed italic mb-8 flex-grow">
+                                The skincare treatments at Reha's are life-changing. My skin has never looked so radiant and healthy. 
+                                The ambiance and professionalism are simply world-class.
+                            </p>
+                            <div class="flex items-center space-x-4 border-t border-white/10 pt-6 mt-auto">
+                                <div class="w-10 h-10 rounded-full bg-[#d6336c]/10 flex items-center justify-center text-[#d6336c] font-[#d6336c] text-sm font-italiana border border-[#d6336c]/20">MD</div>
+                                <div>
+                                    <h4 class="font-cormorant text-lg text-white italic">Maria D'Souza</h4>
+                                    <span class="text-[0.55rem] tracking-[0.2em] uppercase text-[#d6336c]/60 font-medium">Regular Client</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="testimonial-card flex-shrink-0 w-full md:w-[calc(33.333%-1rem)] bg-white/5 backdrop-blur-md border border-white/5 p-8 rounded-sm hover:border-[#d6336c]/30 transition-colors">
+                        <div class="flex flex-col h-full">
+                            <span class="font-cormorant text-6xl text-[#d6336c]/20 block mb-[-20px]">"</span>
+                            <p class="font-mulish text-cream/80 text-sm md:text-base leading-relaxed italic mb-8 flex-grow">
+                                I absolutely love the hair styling services. Reha brings her Bollywood expertise to life with every cut. 
+                                It's truly an experience like no other.
+                            </p>
+                            <div class="flex items-center space-x-4 border-t border-white/10 pt-6 mt-auto">
+                                <div class="w-10 h-10 rounded-full bg-[#d6336c]/10 flex items-center justify-center text-[#d6336c] font-bold text-sm font-italiana border border-[#d6336c]/20">AK</div>
+                                <div>
+                                    <h4 class="font-cormorant text-lg text-white italic">Ananya Kapoor</h4>
+                                    <span class="text-[0.55rem] tracking-[0.2em] uppercase text-[#d6336c]/60 font-medium">Fashion Stylist</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 (Duplicate for smooth sliding loop) -->
+                     <div class="testimonial-card flex-shrink-0 w-full md:w-[calc(33.333%-1rem)] bg-white/5 backdrop-blur-md border border-white/5 p-8 rounded-sm hover:border-[#d6336c]/30 transition-colors">
+                        <div class="flex flex-col h-full">
+                            <span class="font-cormorant text-6xl text-[#d6336c]/20 block mb-[-20px]">"</span>
+                            <p class="font-mulish text-cream/80 text-sm md:text-base leading-relaxed italic mb-8 flex-grow">
+                                Exceptional service! The team is incredibly professional and the results are always consistent. 
+                                Highly recommend for anyone looking for premium beauty care.
+                            </p>
+                            <div class="flex items-center space-x-4 border-t border-white/10 pt-6 mt-auto">
+                                <div class="w-10 h-10 rounded-full bg-[#d6336c]/10 flex items-center justify-center text-[#d6336c] font-bold text-sm font-italiana border border-[#d6336c]/20">RL</div>
+                                <div>
+                                    <h4 class="font-cormorant text-lg text-white italic">Ritu Lamba</h4>
+                                    <span class="text-[0.55rem] tracking-[0.2em] uppercase text-[#d6336c]/60 font-medium">Corporate Client</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Modern Minimal Controls -->
+                <div class="flex items-center justify-between mt-12 px-4">
+                    <button id="prev-btn-t" class="p-4 rounded-full border border-[#d6336c]/20 text-[#d6336c] hover:bg-[#d6336c] hover:text-white transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    
+                    <div id="t-dots" class="flex space-x-4">
+                        <!-- Dots handled by JS -->
+                    </div>
+
+                    <button id="next-btn-t" class="p-4 rounded-full border border-[#d6336c]/20 text-[#d6336c] hover:bg-[#d6336c] hover:text-white transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Services Section -->
+    <section id="services-section" class="py-24 px-6 bg-white overflow-hidden">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="text-center mb-20 max-w-3xl mx-auto">
+                <span class="font-mulish text-[#d6336c] tracking-[0.5em] uppercase text-[0.7rem] font-bold mb-4 block">Our Expertise</span>
+                <h2 class="font-cormorant text-4xl md:text-6xl text-charcoal italic mb-6">Bespoke Beauty Services</h2>
+                <p class="font-mulish text-charcoal/50 text-base md:text-xl font-light leading-relaxed">
+                    A curated selection of world-class beauty experiences, tailored to reveal your most radiant self through expert artistry and personalized care.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 mb-16">
+                
+                <!-- Service 1: Makeup & Hair -->
+              <div class="service-card group relative border border-[#d6336c]/10 hover:border-[#d6336c]/30 transition-all duration-700 hover:shadow-2xl hover:shadow-[#d6336c]/5 bg-cream/30 overflow-hidden">
+
+    <!-- Image -->
+  <div class="w-full h-48 flex items-center justify-center bg-black overflow-hidden">
+        <img src="services/services1.jpg" alt="Makeup & Hair" 
+            class="max-h-full object-contain transform group-hover:scale-110 transition-transform duration-700">
+    </div>
+
+    <!-- Content -->
+    <div class="p-8">
+        <div class="absolute top-0 left-0 w-1 h-0 bg-[#d6336c] group-hover:h-full transition-all duration-700"></div>
+
+        <div class="mb-6 text-[#d6336c] transform group-hover:scale-110 transition-transform duration-500">
+            <!-- Mirror Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 stroke-[1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+               <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+        </div>
+
+        <h3 class="font-cormorant text-2xl md:text-3xl text-charcoal italic mb-3 group-hover:text-[#d6336c] transition-colors">
+            Makeup & Hair
+        </h3>
+
+        <p class="font-mulish text-charcoal/60 text-sm leading-relaxed mb-6 font-light italic">
+            "Transforming your vision into reality with red-carpet worthy makeup and masterful hair styling."
+        </p>
+
+        <ul class="space-y-3 font-mulish text-[0.6rem] tracking-[0.3em] font-bold text-charcoal/40 uppercase">
+            <li class="flex items-center space-x-3"><span class="w-1.5 h-1.5 bg-[#d6336c]/50 rounded-full"></span><span>Red Carpet Ready</span></li>
+            <li class="flex items-center space-x-3"><span class="w-1.5 h-1.5 bg-[#d6336c]/50 rounded-full"></span><span>Masterful Styling</span></li>
+            <li class="flex items-center space-x-3"><span class="w-1.5 h-1.5 bg-[#d6336c]/50 rounded-full"></span><span>Expert Artistry</span></li>
+        </ul>
+    </div>
+
+</div>
+
+                <!-- Service 2: Beauty Insight -->
+                <div class="service-card group relative border border-[#d6336c]/10 hover:border-[#d6336c]/30 transition-all duration-700 hover:shadow-2xl hover:shadow-[#d6336c]/5 bg-cream/30 overflow-hidden">
+
+    <!-- Image -->
+    <div class="w-full h-48 flex items-center justify-center bg-black overflow-hidden">
+        <img src="services/services2.jpg" alt="Beauty Insight" 
+            class="max-h-full object-contain transform group-hover:scale-110 transition-transform duration-700">
+    </div>
+
+    <!-- Content -->
+    <div class="p-8">
+        <div class="absolute top-0 left-0 w-1 h-0 bg-[#d6336c] group-hover:h-full transition-all duration-700"></div>
+
+        <div class="mb-6 text-[#d6336c] transform group-hover:scale-110 transition-transform duration-500">
+            <!-- Sparkles Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 stroke-[1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+        </div>
+
+        <h3 class="font-cormorant text-2xl md:text-3xl text-charcoal italic mb-3 group-hover:text-[#d6336c] transition-colors">
+            Beauty Insight
+        </h3>
+
+        <p class="font-mulish text-charcoal/60 text-sm leading-relaxed mb-6 font-light italic">
+            "Professional skincare consultations and advanced treatments from certified excellence."
+        </p>
+
+        <ul class="space-y-3 font-mulish text-[0.6rem] tracking-[0.3em] font-bold text-charcoal/40 uppercase">
+            <li class="flex items-center space-x-3"><span class="w-1.5 h-1.5 bg-[#d6336c]/50 rounded-full"></span><span>Skin Consultation</span></li>
+            <li class="flex items-center space-x-3"><span class="w-1.5 h-1.5 bg-[#d6336c]/50 rounded-full"></span><span>Advanced Care</span></li>
+            <li class="flex items-center space-x-3"><span class="w-1.5 h-1.5 bg-[#d6336c]/50 rounded-full"></span><span>Professional Services</span></li>
+        </ul>
+    </div>
+
+</div>
+
+                <!-- Service 3: Bridal Services -->
+                <div class="service-card group relative border border-[#d6336c]/10 hover:border-[#d6336c]/30 transition-all duration-700 hover:shadow-2xl hover:shadow-[#d6336c]/5 bg-cream/30 overflow-hidden">
+
+    <!-- Image -->
+   <div class="w-full h-48 flex items-center justify-center bg-black overflow-hidden">
+        <img src="services/services3.jpg" alt="Bridal Services" 
+          class="max-h-full object-contain transform group-hover:scale-110 transition-transform duration-700">
+    </div>
+
+    <!-- Content -->
+    <div class="p-8">
+        <div class="absolute top-0 left-0 w-1 h-0 bg-[#d6336c] group-hover:h-full transition-all duration-700"></div>
+
+        <div class="mb-6 text-[#d6336c] transform group-hover:scale-110 transition-transform duration-500">
+            <!-- Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 stroke-[1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+        </div>
+
+        <h3 class="font-cormorant text-2xl md:text-3xl text-charcoal italic mb-3 group-hover:text-[#d6336c] transition-colors">
+            Bridal Services
+        </h3>
+
+        <p class="font-mulish text-charcoal/60 text-sm leading-relaxed mb-6 font-light italic">
+            "Crafting unforgettable moments for your special day with signature bridal glow and elegance."
+        </p>
+
+        <ul class="space-y-3 font-mulish text-[0.6rem] tracking-[0.3em] font-bold text-charcoal/40 uppercase">
+            <li class="flex items-center space-x-3"><span class="w-1.5 h-1.5 bg-[#d6336c]/50 rounded-full"></span><span>Bridal Glow</span></li>
+            <li class="flex items-center space-x-3"><span class="w-1.5 h-1.5 bg-[#d6336c]/50 rounded-full"></span><span>Signature Luxury</span></li>
+            <li class="flex items-center space-x-3"><span class="w-1.5 h-1.5 bg-[#d6336c]/50 rounded-full"></span><span>Personalized Care</span></li>
+        </ul>
+    </div>
+</div>
+            
+
+            <div class="text-center">
+                <a href="services.html" class="inline-block px-12 py-5 bg-charcoal text-white text-[0.8rem] tracking-[0.4em] font-bold uppercase hover:bg-[#d6336c] transition-all duration-500 shadow-xl">
+                    VIEW ALL SERVICES
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Elegant Compact CTA Section -->
+   
+
+    <!-- Instagram Luxe Feed -->
+  
+     <section id="cta-section" class="py-16 px-6 bg-charcoal relative overflow-hidden text-white border-y border-[#d6336c]/10">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#d6336c]/5 via-transparent to-transparent pointer-events-none"></div>
+        <div class="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            <div class="cta-content text-left">
+                <span class="font-mulish text-[#d6336c] tracking-[0.5em] uppercase text-[0.6rem] font-bold mb-2 block">The Experience Awaits</span>
+                <h2 class="font-cormorant text-4xl md:text-5xl italic leading-tight">Book Your Signature Transformation</h2>
+            </div>
+            <div class="cta-action flex-shrink-0">
+                <button class="group relative px-10 py-4 bg-transparent border border-[#d6336c]/50 text-[#d6336c] text-[0.7rem] tracking-[0.4em] font-bold uppercase transition-all duration-500 hover:text-charcoal overflow-hidden">
+                    <span class="relative z-10 transition-colors duration-500 group-hover:text-charcoal">RESERVE NOW</span>
+                    <div class="absolute inset-0 bg-[#d6336c] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
+                </button>
+            </div>
+        </div>
+        <!-- Subtle Decorative Element -->
+        <div class="absolute top-0 right-0 w-64 h-full bg-white/5 skew-x-12 pointer-events-none"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-6 bg-cream text-charcoal border-t border-[#d6336c]/10">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            
+            <div class="md:col-span-1">
+                <span class="font-italiana text-2xl tracking-[0.2em] text-charcoal">REHA'S</span>
+                <p class="mt-6 text-[0.8rem] text-charcoal/60 leading-relaxed font-light">
+                    Experience the artistry and care that define our brand. Join us and let beauty meet passion.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-[0.7rem] tracking-[0.3em] font-bold uppercase mb-8">LOCATION</h4>
+                <p class="text-[0.8rem] text-charcoal/60 font-light leading-relaxed">
+                   Bath Impressions Complex, Housing Colony, Chanpora, Srinagar, Jammu and Kashmir 190001<br>
+                    Premier Beauty Services
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-[0.7rem] tracking-[0.3em] font-bold uppercase mb-8">CONNECT</h4>
+                <p class="text-[0.8rem] text-charcoal/60 font-light leading-relaxed">
+                    Mobile phone: +91 9622212234<br>
+                    Email: 
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-[0.7rem] tracking-[0.3em] font-bold uppercase mb-8">EXPLORE</h4>
+                <ul class="space-y-4 text-[0.8rem] text-charcoal/60 font-light">
+                    <li><a href="about.html" class="hover:text-[#d6336c] transition-colors">About</a></li>
+                    <li><a href="services.html" class="hover:text-[#d6336c] transition-colors"> Services</a></li>
+                    <li><a href="contact.html" class="hover:text-[#d6336c] transition-colors">Contact</a></li>
+                    <li><a href="gallery.html" class="hover:text-[#d6336c] transition-colors">Gallery</a></li>
+                   
+                </ul>
+            </div>
+
+        </div>
+        <div class="max-w-[1400px] mx-auto mt-20 pt-8 border-t border-[#d6336c]/5 flex flex-col md:flex-row justify-between items-center text-[0.6rem] tracking-[0.2em] font-bold text-charcoal/30 uppercase">
+            <span>© <span id="current-year">2026</span> REHA'S BEAUTY CLINIC</span>
+            <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+         <div class="flex space-x-8 mt-4 md:mt-0">
+                <a href="#" class="hover:text-[#d6336c] transition-colors">INSTAGRAM</a>
+                <a href="#" class="hover:text-[#d6336c] transition-colors">FACEBOOK</a>
+                <a href="#" class="hover:text-[#d6336c] transition-colors">PINTEREST</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // GSAP Initialization
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+    nav.classList.remove('py-4', 'md:py-3');
+    nav.classList.add('py-3', 'md:py-2');
+} else {
+    nav.classList.remove('py-3', 'md:py-2');
+    nav.classList.add('py-4', 'md:py-3');
+}
+        });
+
+        // Hero Slider Logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.indicator-dot');
+        let isAnimating = false;
+
+        function goToSlide(index) {
+            if (isAnimating || index === currentSlide) return;
+            isAnimating = true;
+
+            const outgoingSlide = slides[currentSlide];
+            const incomingSlide = slides[index];
+
+            // Update Dots
+            dots[currentSlide].classList.remove('active');
+            dots[index].classList.add('active');
+
+            // Animate Texts out
+            gsap.to(outgoingSlide.querySelectorAll('.slide-up'), {
+                y: -50,
+                opacity: 0,
+                duration: 0.5,
+                stagger: 0.1
+            });
+
+            // Transition Slides
+            gsap.to(outgoingSlide, {
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    outgoingSlide.classList.remove('active');
+                }
+            });
+
+            incomingSlide.classList.add('active');
+            gsap.fromTo(incomingSlide, 
+                { opacity: 0 }, 
+                { opacity: 1, duration: 1, ease: "power2.inOut" }
+            );
+
+            // Animate Incoming Texts
+            gsap.fromTo(incomingSlide.querySelectorAll('.slide-up'), 
+                { y: 50, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.8, 
+                    delay: 0.4, 
+                    stagger: 0.1,
+                    onComplete: () => {
+                        currentSlide = index;
+                        isAnimating = false;
+                    }
+                }
+            );
+        }
+
+        // Auto play
+        let slideInterval = setInterval(() => {
+            let next = (currentSlide + 1) % slides.length;
+            goToSlide(next);
+        }, 8000);
+
+        // Reset interval on manual change
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                goToSlide(index);
+                slideInterval = setInterval(() => {
+                    let next = (currentSlide + 1) % slides.length;
+                    goToSlide(next);
+                }, 8000);
+            });
+        });
+
+        // Mobile Menu
+        const openBtn = document.getElementById('open-menu');
+        const closeBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        openBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            gsap.from('.mobile-nav-link', {
+                y: 30,
+                opacity: 0,
+                duration: 0.5,
+                delay: 0.2,
+                stagger: 0.1
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Entry Animations
+        gsap.to('#scroll-line', {
+            y: 80,
+            repeat: -1,
+            duration: 2,
+            ease: "power2.inOut"
+        });
+
+        // About Section Animations
+        gsap.from('.about-img-main', {
+            scrollTrigger: {
+                trigger: '#about-section',
+                start: 'top 80%',
+            },
+            x: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from('.about-text-content', {
+            scrollTrigger: {
+                trigger: '#about-section',
+                start: 'top 80%',
+            },
+            x: 100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        // Counter Animation
+        document.querySelectorAll('.counter').forEach(counter => {
+            gsap.from(counter, {
+                scrollTrigger: {
+                    trigger: '#about-section',
+                    start: 'top 70%',
+                },
+                innerText: 0,
+                duration: 2,
+                snap: { innerText: 1 },
+                ease: "power2.out"
+            });
+        });
+
+        // Testimonial Compact Slider Logic
+        const track = document.getElementById('testimonial-track');
+        const cards = document.querySelectorAll('.testimonial-card');
+        const nextBtnT = document.getElementById('next-btn-t');
+        const prevBtnT = document.getElementById('prev-btn-t');
+        let currentIdx = 0;
+        let tIsAnimating = false;
+
+        function getVisibleCards() {
+            return window.innerWidth < 768 ? 1 : 3;
+        }
+
+        function updateSlider() {
+            if (tIsAnimating) return;
+            tIsAnimating = true;
+
+            const visible = getVisibleCards();
+            const total = cards.length;
+            const maxIdx = total - visible;
+            
+            if (currentIdx > maxIdx) currentIdx = 0;
+            if (currentIdx < 0) currentIdx = maxIdx;
+
+            const cardWidth = cards[0].offsetWidth;
+            const gap = 24; // space-x-6 is 1.5rem = 24px
+            const offset = (cardWidth + gap) * currentIdx;
+
+            gsap.to(track, {
+                x: -offset,
+                duration: 0.8,
+                ease: "power2.inOut",
+                onComplete: () => { tIsAnimating = false; }
+            });
+
+            // Update scaling/opacity for focus effect
+            cards.forEach((card, i) => {
+                const isActive = i >= currentIdx && i < currentIdx + visible;
+                gsap.to(card, {
+                    opacity: isActive ? 1 : 0.3,
+                    scale: isActive ? 1 : 0.95,
+                    duration: 0.5
+                });
+            });
+        }
+
+        nextBtnT.addEventListener('click', () => {
+            currentIdx++;
+            updateSlider();
+        });
+
+        prevBtnT.addEventListener('click', () => {
+            currentIdx--;
+            updateSlider();
+        });
+
+        // Resize handler
+        window.addEventListener('resize', updateSlider);
+
+        // Auto play
+        setInterval(() => {
+            if (!tIsAnimating) {
+                currentIdx++;
+                updateSlider();
+            }
+        }, 6000);
+
+        // Initial trigger
+        updateSlider();
+
+      
+        const serviceCards = document.querySelectorAll('#services-section .service-card');
+        gsap.set(serviceCards, { opacity: 0, y: 30 }); 
+        
+        gsap.to(serviceCards, {
+            scrollTrigger: {
+                trigger: '#services-section',
+                start: 'top 85%',
+                once: true
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power2.out",
+            clearProps: "all" 
+        });
+
+       
+        gsap.from('#cta-section .cta-content', {
+            scrollTrigger: {
+                trigger: '#cta-section',
+                start: 'top 90%',
+            },
+            x: -50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        gsap.from('#cta-section .cta-action', {
+            scrollTrigger: {
+                trigger: '#cta-section',
+                start: 'top 90%',
+            },
+            x: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        // Instagram Feed Animation
+        gsap.from('.insta-item', {
+            scrollTrigger: {
+                trigger: '.grid-cols-2.lg-grid-cols-4',
+                start: 'top 90%',
+            },
+            scale: 0.9,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.1,
+            ease: "power3.out"
+        });
+
+        // Gallery Animation
+        gsap.from('.gallery-item', {
+            scrollTrigger: {
+                trigger: '.columns-1',
+                start: 'top 85%',
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power2.out"
+        });
+
+        // Initial Entry Animation
+        window.addEventListener('load', () => {
+            gsap.from('.slide.active .slide-up', {
+                y: 50,
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.2,
+                delay: 0.5,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.slide.active img', {
+                scale: 1.3,
+                duration: 3,
+                ease: "power2.out"
+            });
+
+            gsap.from('nav', {
+                y: -100,
+                opacity: 0,
+                duration: 1,
+                delay: 0.2,
+                ease: "power3.out"
+            });
+        });
+        
+
+
+    </script>
+</body>
+</html>

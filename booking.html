@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Appointment | Reha's Beauty Clinic</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital@0;1&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                gold: '#B08D57',
+                cream: '#F9F6F1',
+                charcoal: '#1A1A1A'
+            },
+            fontFamily: {
+                cormorant: ['Cormorant', 'serif'],
+                mulish: ['Mulish', 'sans-serif']
+            }
+        }
+    }
+}
+</script>
+
+<style>
+body {
+    background: #F9F6F1;
+    font-family: 'Mulish', sans-serif;
+}
+
+/* Floating labels */
+.input-group {
+    position: relative;
+}
+.input-group input,
+.input-group textarea,
+.input-group select {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    background: transparent;
+    padding: 12px 0;
+    outline: none;
+}
+
+.input-group label {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #888;
+    transition: 0.3s;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label,
+.input-group textarea:focus + label,
+.input-group textarea:valid + label,
+.input-group select:focus + label {
+    top: -10px;
+    font-size: 10px;
+    color: #d6336c;
+}
+
+/* Popup */
+#popup {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9);
+    transition: 0.4s ease;
+}
+#popup.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: scale(1);
+}
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- HERO -->
+<section class="relative h-[60vh] flex items-center justify-center text-center bg-charcoal">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"
+     class="absolute inset-0 w-full h-full object-cover">
+
+    <div class="relative z-10 text-white px-6">
+        <h1 class="font-cormorant text-5xl md:text-6xl italic mb-6">
+            Reserve Your Experience
+        </h1>
+        <p class="text-white/60 max-w-xl mx-auto">
+            Luxury beauty begins with a single booking.
+        </p>
+    </div>
+</section>
+
+<!-- FORM -->
+<section class="py-20 px-6">
+<div class="max-w-3xl mx-auto bg-white/80 backdrop-blur-lg p-10 md:p-16 shadow-2xl border border-[#d6336c]/10">
+
+<h2 class="font-cormorant text-4xl md:text-5xl italic text-center mb-12">
+    Book Appointment
+</h2>
+
+<form id="form" class="space-y-10">
+
+<!-- NAME -->
+<div class="input-group">
+<input type="text" id="name" required>
+<label>Full Name</label>
+</div>
+
+<!-- PHONE -->
+<div class="input-group">
+<input type="tel" id="phone" required>
+<label>Phone Number</label>
+</div>
+
+<!-- SERVICE -->
+<div class="input-group">
+<select id="service" required>
+<option value="" disabled selected></option>
+<option>Makeup & Hair</option>
+<option>Beauty Insight</option>
+<option>Bridal Services</option>
+<option>Skin Treatment</option>
+</select>
+<label>Select Service</label>
+</div>
+
+<!-- DATE TIME -->
+<div class="grid md:grid-cols-2 gap-8">
+<div class="input-group">
+<input type="date" id="date" required>
+<label>Date</label>
+</div>
+
+<div class="input-group">
+<input type="time" id="time" required>
+<label>Time</label>
+</div>
+</div>
+
+<!-- NOTES -->
+<div class="input-group">
+<textarea id="message" rows="3"></textarea>
+<label>Additional Notes</label>
+</div>
+
+<!-- BUTTON -->
+<div class="text-center pt-6">
+<button type="submit"
+class="px-12 py-4 bg-charcoal text-white text-[0.7rem] tracking-[0.4em] uppercase hover:bg-[#d6336c] transition-all duration-500 shadow-xl">
+BOOK VIA WHATSAPP
+</button>
+</div>
+
+</form>
+
+</div>
+</section>
+
+<!-- POPUP -->
+<div id="popup" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+
+<div class="bg-white p-10 text-center shadow-2xl max-w-sm">
+<h2 class="font-cormorant text-3xl italic mb-4 text-[#d6336c]">
+Booking Sent
+</h2>
+
+<p class="text-gray-600 mb-6">
+Redirecting you to WhatsApp...
+</p>
+
+<button onclick="closePopup()"
+class="px-8 py-3 bg-charcoal text-white uppercase text-xs tracking-widest hover:bg-[#d6336c] transition">
+Close
+</button>
+</div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+const form = document.getElementById('form');
+const popup = document.getElementById('popup');
+
+form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    let name = document.getElementById('name').value;
+    let phone = document.getElementById('phone').value;
+    let service = document.getElementById('service').value;
+    let date = document.getElementById('date').value;
+    let time = document.getElementById('time').value;
+    let message = document.getElementById('message').value;
+
+    let number = "919622212234";
+
+    let text = `Hello Reha's Beauty Clinic,%0A
+Name: ${name}%0A
+Phone: ${phone}%0A
+Service: ${service}%0A
+Date: ${date}%0A
+Time: ${time}%0A
+Notes: ${message}`;
+
+    popup.classList.add('active');
+setTimeout(() => {
+    // Open WhatsApp
+    window.open(`https://wa.me/${number}?text=${text}`, '_blank');
+
+    // Redirect to home page after 2 seconds
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 2000);
+
+}, 1200);
+});
+
+function closePopup(){
+    popup.classList.remove('active');
+}
+</script>
+
+</body>
+</html>
